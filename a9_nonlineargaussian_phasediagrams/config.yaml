@@ -1,0 +1,116 @@
+# Phase-diagram experiment configuration.
+
+defaults:
+  alpha:       1.0
+  beta:        1.0
+  w:           1.0
+  beta_KL:     4.0
+  c:           1.0
+  N:           100000
+  S:           50            # seeds per validation cell
+  master_seed: 42
+
+epsilon_bands:
+  # Bands for analytic predictions: machine-eps tolerance.
+  analytic:
+    eps_off: 1.0e-8
+    eps_J:   1.0e-8
+  # Bands for empirical seed-aggregated outcomes: scale to seed SE.
+  empirical:
+    factor:      1.96         # multiplier on seed SE
+    eps_off_min: 1.0e-4       # floor on off-target tolerance
+    eps_J_min:   1.0e-4       # floor on Delta J tolerance
+
+# Track A sweeps: closed-form predictions only.
+sweeps:
+  headline:
+    rho_12: {start: -0.9, stop: 0.9, num: 81}
+    rho_13: {start: -0.9, stop: 0.9, num: 81}
+    gamma:  [0.4]
+    m_1:    [0.0]
+    m_2:    [0.0]
+    m_3:    [0.0]
+    c:      [1.0]
+
+  gamma_slice:
+    rho_12: {start: -0.9, stop: 0.9, num: 81}
+    rho_13: {start: -0.9, stop: 0.9, num: 81}
+    gamma:  [0.0, 0.2, 0.4]
+    m_1:    [0.0]
+    m_2:    [0.0]
+    m_3:    [0.0]
+    c:      [1.0]
+
+  r4_1d:
+    rho_12:           [0.3]
+    rho_13:           [0.2]
+    gamma:            [1.0]
+    m_1:              {start: -2.0, stop: 1.0, num: 31}
+    m_2:              [0.0]
+    m_3:              [0.0]
+    c:                [1.0]
+    beta_KL_override: 4.0
+
+  rescalability:
+    rho_12: [0.0]
+    rho_13: [0.5]
+    gamma:  [0.0, 0.4]
+    m_1:    [0.0]
+    m_2:    [0.0]
+    m_3:    [0.0]
+    c:      [0.25, 0.5, 0.75, 1.0, 1.25, 1.5]
+
+# Track B: empirical validation at hand-picked representative cells.
+validation_cells:
+  - name:   R0
+    rho_12: 0.0
+    rho_13: -0.5
+    gamma:  0.4
+    m:      [0.0, 0.0, 0.0]
+    c:      1.0
+  - name:   R0_cont
+    rho_12: 0.5
+    rho_13: -0.3
+    gamma:  0.4
+    m:      [0.0, 0.0, 0.0]
+    c:      1.0
+  - name:   R1_neutral
+    rho_12: 0.5
+    rho_13: 0.0
+    gamma:  0.4
+    m:      [0.0, 0.0, 0.0]
+    c:      1.0
+  - name:   R1_harmful
+    rho_12: 0.5
+    rho_13: 0.3
+    gamma:  0.4
+    m:      [0.0, 0.0, 0.0]
+    c:      1.0
+  - name:   R2
+    rho_12: 0.0
+    rho_13: 0.5
+    gamma:  0.4
+    m:      [0.0, 0.0, 0.0]
+    c:      1.0
+  - name:   R3
+    rho_12: 0.0
+    rho_13: 0.0
+    gamma:  0.4
+    m:      [0.0, 0.0, 0.0]
+    c:      1.0
+  - name:             R4_audit_neg
+    rho_12:           0.3
+    rho_13:           0.2
+    gamma:            1.0
+    m:                [-1.5, 0.0, 0.0]
+    c:                1.0
+    beta_KL_override: 4.0
+  - name:             R4_audit_zero
+    rho_12:           0.3
+    rho_13:           0.2
+    gamma:            1.0
+    m:                [0.0, 0.0, 0.0]
+    c:                1.0
+    beta_KL_override: 4.0
+
+artifacts_dir: artifacts
